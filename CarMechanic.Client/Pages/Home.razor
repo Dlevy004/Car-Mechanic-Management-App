@@ -1,3 +1,13 @@
 ﻿@page "/"
 
-<CarMechanic.Client.Components.Navbar />
+<CarMechanic.Client.Components.Navbar showCustomers="showCustomers"
+                                      OnPanelChange="PanelChanged" />
+
+@code {
+    public bool showCustomers = true;
+
+    private void PanelChanged(bool isCustomersSelected)
+    {
+        showCustomers = isCustomersSelected;
+    }
+}

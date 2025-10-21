@@ -1,0 +1,18 @@
+﻿<div class="profile-panel @(IsVisible ? "" : "hidden")" id="profile-panel">
+    <div class="profile-info">
+        <div class="profile-info-header">
+            <img src="./images/account_circle_24dp_2D425C_FILL1_wght400_GRAD0_opsz24.svg" alt="Profile icon">
+            <p>Admin</p>
+        </div>
+        <button class="closeBtn" @onclick="() => OnClose.InvokeAsync()">
+            <img src="./images/close_24dp_2D425C_FILL0_wght400_GRAD0_opsz24.svg" alt="Close icon">
+        </button>
+    </div>
+    <button id="logoutBtn" @onclick="() => OnLogout.InvokeAsync()">Logout</button>
+</div>
+
+@code {
+    [Parameter] public bool IsVisible { get; set; }
+    [Parameter] public EventCallback OnClose { get; set; }
+    [Parameter] public EventCallback OnLogout { get; set; }
+}

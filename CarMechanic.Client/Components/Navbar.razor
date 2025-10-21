@@ -10,11 +10,11 @@
             src="./images/search_24dp_E2E1E2_FILL1_wght400_GRAD0_opsz24.svg" 
             alt="Search icon in darkmode">
 
-        <img 
+        <img @onclick="ToggleProfilePanel"
             id="profileLight" class="icon anim lightImg" 
             src="./images/account_circle_24dp_2D425C_FILL1_wght400_GRAD0_opsz24.svg" 
             alt="Profil icon">
-        <img 
+        <img @onclick="ToggleProfilePanel"
             id="profileDark" class="icon anim darkImg" 
             src="./images/account_circle_24dp_E2E1E2_FILL1_wght400_GRAD0_opsz24.svg" 
             alt="Profil icon in darkmode">
@@ -32,10 +32,33 @@
             }
         </button>
     </div>
+
+    <div id="panel-toggle">
+        <div class="current-panel @(showCustomers ? "" : "jobs-active")">
+            <a class="@(showCustomers ? "active-panel" : "")"
+               @onclick="() => OnPanelChange.InvokeAsync(true)"
+               id="btn-customer">
+                <h1>Customers</h1>
+            </a>
+            <a class="@(!showCustomers ? "active-panel" : "")"
+               @onclick="() => OnPanelChange.InvokeAsync(false)"
+               id="btn-jobs">
+                <h1>Jobs</h1>
+            </a>
+        </div>
+    </div>
 </header>
 
+<ProfilePanel IsVisible="profileVisible"
+              OnClose="CloseProfilePanel"
+              OnLogout="HandleUserLogout" />
+
 @code {
+    private bool profileVisible = false;
     private bool darkMode = false;
+
+    [Parameter] public bool showCustomers { get; set; }
+    [Parameter] public EventCallback<bool> OnPanelChange { get; set; }
 
     private async Task SetBodyClass(string className, bool add) 
         => await JS.InvokeVoidAsync(
@@ -46,6 +69,21 @@
     {
         darkMode = isDark;
         await SetBodyClass("darkmode", darkMode);
+    }
+
+    private void ToggleProfilePanel()
+    {
+        profileVisible = !profileVisible;
+    }
+
+    private void CloseProfilePanel()
+    {
+        profileVisible = false;
+    }
+
+    private void HandleUserLogout()
+    {
+		Console.WriteLine("User logged out");
     }
 }
 
