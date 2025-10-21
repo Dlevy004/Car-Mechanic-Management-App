@@ -1,0 +1,51 @@
+﻿@inject IJSRuntime JS
+@inject NavigationManager NavigationManager
+
+<header id="header"> 
+    <div class="icons">
+        <img id="searchLight" class="icon anim lightImg" 
+            src="./images/search_24dp_2D425C_FILL0_wght400_GRAD0_opsz24.svg" 
+            alt="Search Icon">
+        <img id="searchDark" class="icon anim darkImg" 
+            src="./images/search_24dp_E2E1E2_FILL1_wght400_GRAD0_opsz24.svg" 
+            alt="Search icon in darkmode">
+
+        <img 
+            id="profileLight" class="icon anim lightImg" 
+            src="./images/account_circle_24dp_2D425C_FILL1_wght400_GRAD0_opsz24.svg" 
+            alt="Profil icon">
+        <img 
+            id="profileDark" class="icon anim darkImg" 
+            src="./images/account_circle_24dp_E2E1E2_FILL1_wght400_GRAD0_opsz24.svg" 
+            alt="Profil icon in darkmode">
+
+        <button class="icon anim theme-switch" @onclick="() => SetDarkMode(!darkMode)">
+            @if (darkMode)
+            {
+                <img src="./images/toggle_on_24dp_2D425C_FILL0_wght400_GRAD0_opsz24.svg" 
+                    alt="Toggle On icon">
+            }
+            else
+            {
+                <img src="./images/toggle_off_24dp_2D425C_FILL1_wght400_GRAD0_opsz24.svg" 
+                    alt="Toggle Off icon">
+            }
+        </button>
+    </div>
+</header>
+
+@code {
+    private bool darkMode = false;
+
+    private async Task SetBodyClass(string className, bool add) 
+        => await JS.InvokeVoidAsync(
+            "eval", 
+            $"document.body.classList.{(add ? "add" : "remove")}('{className}')");
+
+    private async Task SetDarkMode(bool isDark)
+    {
+        darkMode = isDark;
+        await SetBodyClass("darkmode", darkMode);
+    }
+}
+

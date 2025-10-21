@@ -1,0 +1,67 @@
+:root {
+    --primary-font-family: Arial, Helvetica, sans-serif;
+
+    --primary-blue: #2D425C;
+    --secondary-blue: #0691FF;
+    --primary-light: #E2E1E2;
+    --secondary-light: #F9FCFF;
+
+    --main-font-color: black;
+    --font-color: white;
+
+    --table-bg-color: white;
+
+    --placeholder-color: grey;
+}
+
+.darkmode {
+    --primary-blue: #121212;
+    --secondary-blue: #E2E1E2;
+    --primary-light: #545454;
+    --secondary-light: #07182ef1;
+
+    --main-font-color: white;
+    --font-color: black;
+
+    --table-bg-color: rgb(98, 98, 98);
+
+    --placeholder-color: rgb(43, 43, 43);
+}
+
+*, ::after, ::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: all 0.2s ease-in;
+}
+
+body {
+    background-color: var(--secondary-light);
+    font-family: var(--primary-font-family);
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+}
+
+a, button, .icon, .anim {
+    cursor: pointer;
+}
+
+.lightImg {
+    display: block;
+}
+
+.darkImg {
+    display: none;
+}
+
+body.darkmode .lightImg {
+    display: none;
+}
+
+body.darkmode .darkImg {
+    display: block;
+}

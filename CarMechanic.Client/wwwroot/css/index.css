@@ -1,0 +1,34 @@
+/*NavBar*/
+#header, .icons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#header {
+    position: fixed;
+    width: 100%;
+    height: 10%;
+    background-color: var(--primary-light);
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
+.icons {
+    gap: 3rem;
+}
+
+#searchLight, #searchDark, .theme-switch img {
+    transform: scale(1.5);
+}
+
+#profileLight, #profileDark {
+    transform: scale(2.5);
+}
+
+/* Buttons */
+.theme-switch {
+    background-color: transparent;
+    border: none;
+}
