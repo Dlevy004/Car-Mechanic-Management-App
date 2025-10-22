@@ -19,6 +19,18 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IJobService, JobService>();
 
+
+// CORS beállítások finomítása
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.WithOrigins("https://localhost:7200")
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -31,7 +43,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+app.UseRouting();
+
+app.UseCors("AllowAll");
+
+// app.UseAuthorization();
 
 app.MapControllers();
 

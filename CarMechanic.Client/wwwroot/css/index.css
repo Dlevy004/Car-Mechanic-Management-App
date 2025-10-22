@@ -144,7 +144,7 @@
 .panel-container #customers-section,
 .panel-container #jobs-section {
     width: 90%;
-    margin: 8% auto 4rem;
+    margin: 12% auto 4rem;
     font-family: var(--primary-font-family);
 }
 
@@ -213,8 +213,118 @@ p em {
     transform: translateY(-5px) scale(2);
 }
 
+/*VIEW CHANGE*/
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    padding: 1rem 0;
+}
+
+.data-card {
+    background-color: var(--table-bg-color);
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    padding: 1.2rem;
+    transition: all 0.2s ease;
+}
+
+.data-card:hover {
+    transform: translateY(-3px);
+}
+
+.data-card h3 {
+    color: white;
+    background-color: var(--primary-blue);
+    border-radius: 10px;
+    padding: 1rem 2rem;
+    font-size: 20px;
+    width: 100%;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.data-card .card-row {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+/*jobs*/
+
+.data-card .card-row-header {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.data-card .card-row-header div {
+    color: white;
+    background-color: var(--primary-blue);
+    border-radius: 10px;
+    padding: 0.5rem 1rem;
+    font-size: 20px;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.data-card .card-row-header div h3 {
+    margin: 0;
+    padding: 0.5rem;
+}
+
+.data-card .card-row p {
+    color: var(--main-font-color);
+    font-size: 18px;
+}
+
+.data-card .card-row p:first-of-type {
+    font-weight: bold;
+}
+
+.data-card .actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/*JOBS PANEL*/
+.panel-container {
+    display: flex;
+    width: 200%;
+    transition: transform 0.5s ease-in-out, opacity 0.3s ease;
+}
+
+.panel {
+    width: 50%;
+    flex-shrink: 0;
+}
+
+.panel-container.show-jobs {
+    transform: translateX(-50%);
+}
+
+.panel-container.show-customers {
+    transform: translateX(0);
+}
+
+.panel-container.show-jobs, .panel-container.show-customers {
+    opacity: 1;
+}
+
 /* Buttons */
-.theme-switch, .closeBtn {
+.theme-switch, .closeBtn,
+.addCustomerBtn, .addJobBtn,
+.viewSwitch {
     background-color: transparent;
     border: none;
 }

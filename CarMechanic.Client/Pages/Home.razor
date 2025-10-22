@@ -13,21 +13,32 @@
     </div>
 
     <div class="panel jobs-panel">
-		
+		<CarMechanic.Client.Components.Jobs @ref="jobsComponent"
+        OnAddJob="OpenJobPanel"/>
     </div>
 </div>
 
 @code {
     public bool showCustomers = true;
     private CarMechanic.Client.Components.Customers customersComponent;
+    private CarMechanic.Client.Components.Jobs jobsComponent;
     private bool isAddCustomerPanelVisible = false;
+    private bool isAddJobPanelVisible = false;
     private Customer customerToEdit;
+    private Job jobToEdit;
 
     private void OpenCustomerPanel(Customer customer)
     {
         customerToEdit = customer;
         isAddCustomerPanelVisible = true;
     }
+
+    private void OpenJobPanel(Job job)
+    {
+        jobToEdit = job; // Ha job null, akkor 'Add', else 'Edit'
+        isAddJobPanelVisible = true;
+    }
+
 
     private void PanelChanged(bool isCustomersSelected)
     {

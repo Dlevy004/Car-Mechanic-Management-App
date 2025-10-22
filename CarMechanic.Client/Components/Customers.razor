@@ -106,7 +106,7 @@
     private async Task HandleDelete(Customer customerToDelete)
     {
         // Megerősítést kérünk a felhasználótól JavaScript segítségével
-        var confirmed = await JS.InvokeAsync<bool>("confirm", $"Biztosan törölni szeretné {customerToDelete.Name} nevű ügyfelet?");
+        var confirmed = await JS.InvokeAsync<bool>("confirm", $"Are you sure you want to delete customer {customerToDelete.Name}?");
         if (confirmed)
         {
             await Http.DeleteAsync($"api/customers/{customerToDelete.Id}");

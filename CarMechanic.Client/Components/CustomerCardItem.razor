@@ -1,0 +1,36 @@
+﻿@using CarMechanic.Shared.Models
+
+<div class="data-card">
+    <h3>@Customer.Name</h3>
+    <div class="card-row">
+        <p>ID:</p>
+        <p>@Customer.Id</p>
+    </div>
+    <div class="card-row">
+        <p>Email:</p>
+        <p>@Customer.Email</p>
+    </div>
+    <div class="card-row">
+        <p>Address:</p>
+        <p>@Customer.Address</p>
+    </div>
+
+    <div class="actions">
+        <button class="addCustomerBtn" @onclick="() => OnEdit.InvokeAsync(Customer)">
+            <img class="anim lightImg" src="./images/edit_square_24dp_2D425C_FILL0_wght400_GRAD0_opsz24.svg" alt="Edit customer icon">
+            <img class="anim darkImg" src="./images/edit_square_24dp_E2E1E2_FILL0_wght400_GRAD0_opsz24.svg" alt="Edit customer icon darkmode">
+        </button>
+
+        <button class="deleteBtn" @onclick="() => OnDelete.InvokeAsync(Customer.Id)">
+            <img class="anim lightImg" src="./images/delete_24dp_2D425C_FILL0_wght400_GRAD0_opsz24.svg" alt="Delete customer icon">
+            <img class="anim darkImg" src="./images/delete_24dp_E2E1E2_FILL0_wght400_GRAD0_opsz24.svg" alt="Delete customer icon darkmode">
+        </button>
+    </div>
+</div>
+
+@code {
+    [Parameter] public Customer Customer { get; set; }
+
+    [Parameter] public EventCallback<Customer> OnEdit { get; set; }
+    [Parameter] public EventCallback<int> OnDelete { get; set; }
+}

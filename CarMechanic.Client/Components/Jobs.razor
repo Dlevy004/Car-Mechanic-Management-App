@@ -1,0 +1,150 @@
+﻿@inject HttpClient Http
+@inject IJSRuntime JS
+@using CarMechanic.Shared.Models
+@using CarMechanic.Shared.Enums
+
+<section id="jobs-section">
+    <div class="table-header">
+        <button class="viewSwitch" data-panel="customer" @onclick="ToggleView">
+            <img class="anim lightImg listView
+                @(cardViewVisible ? "" : "hidden")"
+                 src="./images/lists_24dp_2D425C_FILL0_wght400_GRAD0_opsz24.svg"
+                 alt="List View">
+            <img class="anim darkImg listView
+                 @(cardViewVisible ? "" : "hidden")"
+                 src="./images/lists_24dp_E2E1E2_FILL0_wght400_GRAD0_opsz24.svg"
+                 alt="List View switch icon darkmode">
+
+            <img class="anim lightImg cardView
+                @(cardViewVisible ? "hidden" : "")"
+                 src="./images/grid_view_24dp_2D425C_FILL1_wght400_GRAD0_opsz24.svg"
+                 alt="Card View">
+            <img class="anim darkImg cardView
+                @(cardViewVisible ? "hidden" : "")"
+                 src="./images/grid_view_24dp_E2E1E2_FILL1_wght400_GRAD0_opsz24.svg"
+                 alt="Card View switch icon darkmode">
+        </button>
+
+        <button class="addCustomerBtn" @onclick="() => OnAddJob.InvokeAsync(null)">
+            <img class="anim lightImg" src="./images/add_box_24dp_2D425C_FILL1_wght400_GRAD0_opsz24.svg" alt="Add new Customer icon">
+            <img class="anim darkImg" src="./images/add_box_24dp_E2E1E2_FILL1_wght400_GRAD0_opsz24.svg" alt="Add new Customer icon darkmode">
+        </button>
+    </div>
+
+    @if (jobList == null)
+    {
+        <p><em>Loading jobs...</em></p>
+    }
+    else
+    {
+        <table class="data-table listView @(cardViewVisible ? "hidden" : "")">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Customer ID</th>
+                    <th>License Plate</th>
+                    <th>Category</th>
+                    <th>Status</th>
+                    <th>Est. Hours</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var job in jobList)
+                {
+                    <JobsListItem Job="job"
+                                  WorkHourEstimation="@CalculateWorkHourEstimation(job)"
+                                  OnViewDetails="() => HandleViewDetails(job)"
+                                  OnEdit="() => HandleEdit(job)"
+                                  OnDelete="() => HandleDelete(job)" />
+                }
+            </tbody>
+        </table>
+
+        <div class="card-container @(cardViewVisible ? "" : "hidden")">
+            @foreach (var job in jobList)
+            {
+                <JobCardItem Job="job"
+                             WorkHourEstimation="@CalculateWorkHourEstimation(job)"
+                             OnViewDetails="() => HandleViewDetails(job)"
+                             OnEdit="() => HandleEdit(job)"
+                             OnDelete="() => HandleDelete(job)" />
+            }
+        </div>
+    }
+</section>
+
+@code {
+    [Parameter] public EventCallback<Job> OnAddJob { get; set; }
+    [Parameter] public EventCallback<Job> OnViewJobDetails { get; set; }
+
+    private List<Job> jobList;
+    private bool cardViewVisible = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadJobs();
+    }
+
+    public async Task LoadJobs()
+    {
+        jobList = await Http.GetFromJsonAsync<List<Job>>("api/jobs");
+        StateHasChanged();
+    }
+
+    private void ToggleView() => cardViewVisible = !cardViewVisible;
+
+    // Részletek panel megnyitásának jelzése
+    private async Task HandleViewDetails(Job jobToShow)
+    {
+        await OnViewJobDetails.InvokeAsync(jobToShow);
+    }
+
+    private async Task HandleEdit(Job jobToEdit)
+    {
+        await OnAddJob.InvokeAsync(jobToEdit);
+    }
+
+    private async Task HandleDelete(Job jobToDelete)
+    {
+        var confirmed = await JS.InvokeAsync<bool>("confirm", $"Are you sure you want to delete the job with license plate number {jobToDelete.LicensePlateNumber}?");
+        if (confirmed)
+        {
+            await Http.DeleteAsync($"api/jobs/{jobToDelete.Id}");
+            await LoadJobs();
+        }
+    }
+
+    private double CalculateWorkHourEstimation(Job job)
+    {
+        double categoryHours = job.JobCategory switch
+        {
+            JobCategory.Chassis => 3,
+            JobCategory.Engine => 8,
+            JobCategory.Suspension => 6,
+            JobCategory.Brakes => 4,
+            _ => 0
+        };
+
+        int carAge = DateTime.Now.Year - job.VehicleYear;
+        double ageMultiplier = carAge switch
+        {
+            var age when age >= 0 && age < 5 => 0.5,
+            var age when age >= 5 && age < 10 => 1,
+            var age when age >= 10 && age < 20 => 1.5,
+            _ => 2
+        };
+
+        double severityMultiplier = job.Severity switch
+        {
+            var s when s >= 1 && s <= 2 => 0.2,
+            var s when s >= 3 && s <= 4 => 0.4,
+            var s when s >= 5 && s <= 7 => 0.6,
+            var s when s >= 8 && s <= 9 => 0.8,
+            10 => 1,
+            _ => 0
+        };
+
+        return categoryHours * ageMultiplier * severityMultiplier;
+    }
+}

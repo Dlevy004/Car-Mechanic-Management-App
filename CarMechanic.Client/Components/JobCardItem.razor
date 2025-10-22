@@ -1,0 +1,58 @@
+﻿@using CarMechanic.Shared.Models
+@using CarMechanic.Shared.Enums
+
+<div class="data-card">
+    <div class="card-row-header">
+        <div>
+            <h3 style="white-space: nowrap;">ID:</h3>
+            <p>@Job.Id</p>
+        </div>
+        <div>
+            <h3 style="white-space: nowrap;">Customer ID:</h3>
+            <p>@Job.CustomerId</p>
+        </div>
+    </div>
+
+    <div class="card-row">
+        <p>License Plate Number:</p>
+        <p>@Job.LicensePlateNumber</p>
+    </div>
+    <div class="card-row">
+        <p>Job category:</p>
+        <p>@Job.JobCategory.ToString()</p>
+    </div>
+    <div class="card-row">
+        <p>State:</p>
+        <p>@Job.JobStage.ToString()</p>
+    </div>
+    <div class="card-row">
+        <p>Est. Hours:</p>
+        <p>@WorkHourEstimation.ToString("0.0") hour(s)</p>
+    </div>
+
+    <div class="actions">
+        <button class="jobDetails" @onclick="() => OnViewDetails.InvokeAsync(Job.Id)">
+            <img class="anim lightImg" src="./images/open_in_new_24dp_2D425C_FILL1_wght400_GRAD0_opsz24.svg" alt="Details icon">
+            <img class="anim darkImg" src="./images/open_in_new_24dp_E2E1E2_FILL1_wght400_GRAD0_opsz24.svg" alt="Details icon darkmode">
+        </button>
+
+        <button class="addJobBtn" @onclick="() => OnEdit.InvokeAsync(Job)">
+            <img class="anim lightImg" src="./images/edit_square_24dp_2D425C_FILL0_wght400_GRAD0_opsz24.svg" alt="Edit customer icon">
+            <img class="anim darkImg" src="./images/edit_square_24dp_E2E1E2_FILL0_wght400_GRAD0_opsz24.svg" alt="Edit customer icon darkmode">
+        </button>
+        ű
+        <button class="deleteBtn" @onclick="() => OnDelete.InvokeAsync(Job.Id)">
+            <img class="anim lightImg" src="./images/delete_24dp_2D425C_FILL0_wght400_GRAD0_opsz24.svg" alt="Delete customer icon">
+            <img class="anim darkImg" src="./images/delete_24dp_E2E1E2_FILL0_wght400_GRAD0_opsz24.svg" alt="Delete customer icon darkmode">
+        </button>
+    </div>
+</div>
+
+@code {
+    [Parameter] public Job Job { get; set; }
+    [Parameter] public double WorkHourEstimation { get; set; }
+
+    [Parameter] public EventCallback<int> OnViewDetails { get; set; }
+    [Parameter] public EventCallback<Job> OnEdit { get; set; }
+    [Parameter] public EventCallback<int> OnDelete { get; set; }
+}
