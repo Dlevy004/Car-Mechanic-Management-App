@@ -11,5 +11,7 @@ namespace CarMechanic.Server.Data
         {
         }
         public DbSet<Customer> Customers { get; set; }
+
+        public DbSet<Job> Jobs { get; set; }
     }
 }
