@@ -1,0 +1,117 @@
+﻿@inject HttpClient Http
+@inject IJSRuntime JS
+@using CarMechanic.Shared.Models
+
+<section id="customers-section">
+    <!-- view change and add btn -->
+    <div class="table-header">
+        <button class="viewSwitch" data-panel="customer" @onclick="ToggleView">
+            <img class="anim lightImg listView
+                @(cardViewVisible ? "" : "hidden")"
+            src="./images/lists_24dp_2D425C_FILL0_wght400_GRAD0_opsz24.svg" 
+            alt="List View">
+            <img class="anim darkImg listView
+                 @(cardViewVisible ? "" : "hidden")"
+            src="./images/lists_24dp_E2E1E2_FILL0_wght400_GRAD0_opsz24.svg" 
+            alt="List View switch icon darkmode">
+
+            <img class="anim lightImg cardView
+                @(cardViewVisible ? "hidden" : "")"
+            src="./images/grid_view_24dp_2D425C_FILL1_wght400_GRAD0_opsz24.svg" 
+            alt="Card View">
+            <img class="anim darkImg cardView
+                @(cardViewVisible ? "hidden" : "")"
+            src="./images/grid_view_24dp_E2E1E2_FILL1_wght400_GRAD0_opsz24.svg" 
+            alt="Card View switch icon darkmode">
+        </button>
+
+        <button class="addCustomerBtn" @onclick="() => OnAddCustomer.InvokeAsync(null)">
+            <img class="anim lightImg" src="./images/add_box_24dp_2D425C_FILL1_wght400_GRAD0_opsz24.svg" alt="Add new Customer icon">
+            <img class="anim darkImg" src="./images/add_box_24dp_E2E1E2_FILL1_wght400_GRAD0_opsz24.svg" alt="Add new Customer icon darkmode">
+        </button>
+    </div>
+
+    @if (customerList == null)
+    {
+        <p><em>Loading customers...</em></p>
+    }
+    else
+    {
+        <!-- LIST VIEW -->
+        <table class="data-table listView @(cardViewVisible ? "hidden" : "")">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @if (customerList != null)
+                {
+                    @foreach (var customer in customerList)
+                    {
+                        <CustomerListItem Customer="customer"
+                                          OnEdit="() => HandleEdit(customer)"
+                                          OnDelete="() => HandleDelete(customer)" />
+                    }
+                }
+            </tbody>
+        </table>
+
+        <!-- CARD VIEW -->
+        <div class="card-container @(cardViewVisible ? "" : "hidden")">
+            @if (customerList != null)
+            {
+                @foreach (var customer in customerList)
+                {
+                    <CustomerCardItem Customer="customer"
+                                      OnEdit="() => HandleEdit(customer)"
+                                      OnDelete="() => HandleDelete(customer)" />
+                }
+            }
+        </div>
+    } 
+</section>
+
+@code {
+	[Parameter] public EventCallback<Customer> OnAddCustomer { get; set; }
+    private bool cardViewVisible = false;
+    private List<Customer> customerList;
+
+    public async Task LoadCustomers()
+    {
+        customerList = await Http.GetFromJsonAsync<List<Customer>>("api/customers");
+		StateHasChanged();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadCustomers();
+    }
+
+    private void ToggleView()
+    {
+        cardViewVisible = !cardViewVisible;
+    }
+
+    private async Task HandleEdit(Customer customerToEdit)
+    {
+        await OnAddCustomer.InvokeAsync(customerToEdit);
+    }
+
+    private async Task HandleDelete(Customer customerToDelete)
+    {
+        // Megerősítést kérünk a felhasználótól JavaScript segítségével
+        var confirmed = await JS.InvokeAsync<bool>("confirm", $"Biztosan törölni szeretné {customerToDelete.Name} nevű ügyfelet?");
+        if (confirmed)
+        {
+            await Http.DeleteAsync($"api/customers/{customerToDelete.Id}");
+            await LoadCustomers(); // Frissítjük a listát a törlés után
+        }
+    }
+
+}

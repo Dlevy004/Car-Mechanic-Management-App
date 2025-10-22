@@ -1,10 +1,33 @@
 ﻿@page "/"
 
+@using CarMechanic.Shared.Models;
+
 <CarMechanic.Client.Components.Navbar showCustomers="showCustomers"
                                       OnPanelChange="PanelChanged" />
 
+
+<div class="panel-container @(showCustomers ? "show-customers" : "show-jobs")">
+    <div class="panel customer-panel">
+		<CarMechanic.Client.Components.Customers @ref="customersComponent"
+        OnAddCustomer="OpenCustomerPanel"/>
+    </div>
+
+    <div class="panel jobs-panel">
+		
+    </div>
+</div>
+
 @code {
     public bool showCustomers = true;
+    private CarMechanic.Client.Components.Customers customersComponent;
+    private bool isAddCustomerPanelVisible = false;
+    private Customer customerToEdit;
+
+    private void OpenCustomerPanel(Customer customer)
+    {
+        customerToEdit = customer;
+        isAddCustomerPanelVisible = true;
+    }
 
     private void PanelChanged(bool isCustomersSelected)
     {

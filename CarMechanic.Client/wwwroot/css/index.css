@@ -140,6 +140,79 @@
     display: none;
 }
 
+/*CUSTOMER TABLE*/
+.panel-container #customers-section,
+.panel-container #jobs-section {
+    width: 90%;
+    margin: 8% auto 4rem;
+    font-family: var(--primary-font-family);
+}
+
+p em {
+    margin: 8% auto 4rem;
+}
+
+.table-header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 1rem;
+    gap: 2%;
+}
+
+.table-header img {
+    transform: scale(2);
+}
+
+.data-table {
+    width: 100%;
+    background-color: var(--table-bg-color);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.data-table th,
+.data-table td {
+    padding: 1rem 1.2rem;
+    text-align: left;
+    border-bottom: 1px solid var(--primary-light);
+}
+
+.data-table th {
+    background-color: var(--primary-blue);
+    font-weight: bold;
+    font-size: 20px;
+    color: white;
+}
+
+.data-table td {
+    color: var(--main-font-color);
+    font-size: 18px;
+}
+
+.data-table tr:hover {
+    background-color: var(--primary-light);
+    transition: all 0.2s ease;
+}
+
+.actions {
+    display: flex;
+    gap: 1.2rem;
+}
+
+.actions img {
+    transform: scale(1.3);
+}
+
+.actions .anim:hover {
+    transform: translateY(-5px) scale(1.3);
+}
+
+.table-header img:hover {
+    transform: translateY(-5px) scale(2);
+}
+
 /* Buttons */
 .theme-switch, .closeBtn {
     background-color: transparent;
