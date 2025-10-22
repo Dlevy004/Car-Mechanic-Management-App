@@ -15,4 +15,8 @@
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CarMechanic.Shared\CarMechanic.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,7 +1,0 @@
-﻿namespace CarMechanic.Shared
-{
-    public class Class1
-    {
-
-    }
-}
