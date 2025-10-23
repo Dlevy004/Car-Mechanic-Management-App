@@ -150,6 +150,7 @@
 
 p em {
     margin: 8% auto 4rem;
+    text-align: center;
 }
 
 .table-header {
@@ -297,6 +298,105 @@ p em {
     display: none !important;
 }
 
+/*ADD or EDIT PANEL*/
+/* Overlay (add/edit panel) */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    backdrop-filter: blur(3px);
+}
+
+.overlay-customer {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-customer-panel {
+    background-color: var(--secondary-light);
+    padding: 2rem;
+    border-radius: 15px;
+    width: 500px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    font-family: var(--primary-font-family);
+}
+
+.add-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.add-panel-header h2 {
+    color: var(--main-font-color);
+}
+
+.input-fields {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+}
+
+.input-fields label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 5%;
+}
+
+.input-fields label p {
+    color: var(--main-font-color);
+}
+
+.input-fields label input {
+    margin-left: 1rem;
+    background-color: var(--primary-light);
+    border: none;
+    padding: 0 5%;
+    border-radius: 10px;
+    width: 100%;
+    min-height: 40px;
+    color: var(--main-font-color);
+    font-size: 15px;
+}
+
+.input-fields label input::placeholder {
+    color: var(--placeholder-color);
+}
+
+.add-panel-buttons {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.save {
+    background-color: var(--secondary-blue);
+    color: var(--font-color);
+    border: none;
+    padding: 0.5rem 2rem;
+    border-radius: 8px;
+    font-size: 17px;
+    font-weight: bold;
+}
+
 /*JOBS PANEL*/
 .panel-container {
     display: flex;
@@ -322,9 +422,10 @@ p em {
 }
 
 /* Buttons */
-.theme-switch, .closeBtn,
-.addCustomerBtn, .addJobBtn,
-.viewSwitch {
+.closeBtn, .addCustomerBtn,
+.theme-switch, .addJobBtn,
+.viewSwitch, .jobDetails,
+.deleteBtn {
     background-color: transparent;
     border: none;
 }

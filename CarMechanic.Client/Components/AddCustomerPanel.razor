@@ -1,0 +1,91 @@
+﻿@inject HttpClient Http
+@using CarMechanic.Shared.Models
+
+<div id="overlay-customer" class="overlay @(IsVisible ? "" : "hidden")">
+    <div class="add-customer-panel">
+        <div class="add-panel-header">
+            <h2>@Title</h2>
+            <button class="closeBtn" @onclick="Close">
+                <img class="lightImg" 
+                    src="./images/close_24dp_2D425C_FILL0_wght400_GRAD0_opsz24.svg" 
+                    alt="Close icon">
+                <img class="darkImg" 
+                    src="./images/close_24dp_E2E1E2_FILL0_wght400_GRAD0_opsz24.svg" 
+                    alt="Close icon darkmode">
+            </button>
+        </div>
+
+		<EditForm Model="@customer" OnValidSubmit="HandleValidSubmit">
+			<DataAnnotationsValidator />
+
+            <div class="input-fields">
+                <label>
+                    <p>Name</p>
+                    <InputText class="form-control" @bind-Value="customer.Name" placeholder="Customer name" />
+					<ValidationMessage For="@(() => customer.Name)" />
+                </label>
+
+                <label>
+                    <p>Email</p>
+					<InputText class="form-control" @bind-Value="customer.Email" placeholder="Email" />
+					<ValidationMessage For="@(() => customer.Email)" />
+                </label>
+
+                <label>
+                    <p>Address</p>
+					<InputText class="form-control" @bind-Value="customer.Address" placeholder="Address" />
+					<ValidationMessage For="@(() => customer.Address)" />
+                </label>
+            </div>
+
+            <div class="add-panel-buttons">
+                <button type="submit" class="save">Save</button>
+            </div>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+    [Parameter] public bool IsVisible { get; set; } = false;
+	[Parameter] public Customer CustomerToEdit { get; set; }
+
+    [Parameter] public EventCallback OnClose { get; set; }
+
+	private Customer customer = new();
+	private string Title = "Add New Customer";
+
+	protected override void OnParametersSet()
+	{
+		if (CustomerToEdit != null)
+		{
+			customer = CustomerToEdit;
+			Title = "Edit Customer";
+		}
+		else
+		{
+			customer = new();
+			Title = "Add New Customer";
+		}
+	}
+
+	private async Task HandleValidSubmit()
+	{
+		if (customer.Id == 0)
+		{
+			// Új ügyfél hozzáadása
+			await Http.PostAsJsonAsync("api/customers", customer);
+		}
+		else
+		{
+			// Létező ügyfél frissítése / szerkesztése
+			await Http.PutAsJsonAsync($"api/customers/{customer.Id}", customer);
+		}
+		await Close();
+	}
+
+    private async Task Close()
+    {
+        customer = new(); // Mindig ürítjük a panelt
+        await OnClose.InvokeAsync();
+    }
+}

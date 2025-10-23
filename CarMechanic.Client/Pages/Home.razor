@@ -5,6 +5,9 @@
 <CarMechanic.Client.Components.Navbar showCustomers="showCustomers"
                                       OnPanelChange="PanelChanged" />
 
+<CarMechanic.Client.Components.AddCustomerPanel IsVisible="isAddCustomerPanelVisible"
+                                                CustomerToEdit="customerToEdit"
+                                                OnClose="ClosePanel" />
 
 <div class="panel-container @(showCustomers ? "show-customers" : "show-jobs")">
     <div class="panel customer-panel">
@@ -39,9 +42,31 @@
         isAddJobPanelVisible = true;
     }
 
-
     private void PanelChanged(bool isCustomersSelected)
     {
         showCustomers = isCustomersSelected;
+    }
+
+    private async Task ClosePanel()
+    {
+        bool wasCustomerPanelVisible = isAddCustomerPanelVisible;
+        bool wasJobPanelVisible = isAddJobPanelVisible;
+
+        isAddCustomerPanelVisible = false;
+        isAddJobPanelVisible = false;
+        customerToEdit = null;
+        jobToEdit = null;
+
+        StateHasChanged();
+
+        if (wasCustomerPanelVisible)
+        {
+            await customersComponent.LoadCustomers();
+        }
+
+        if (wasJobPanelVisible)
+        {
+            await jobsComponent.LoadJobs();
+        }
     }
 }
