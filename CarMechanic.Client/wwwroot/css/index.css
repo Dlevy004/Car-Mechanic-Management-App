@@ -327,13 +327,17 @@ p em {
     align-items: center;
 }
 
-.add-customer-panel {
+.add-customer-panel, .add-job-panel {
     background-color: var(--secondary-light);
     padding: 2rem;
     border-radius: 15px;
     width: 500px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     font-family: var(--primary-font-family);
+}
+
+.add-job-panel {
+    width: 800px;
 }
 
 .add-panel-header {
@@ -354,7 +358,14 @@ p em {
     justify-content: center;
 }
 
-.input-fields label {
+.input-fields-jobs {
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    gap: 5%;
+}
+
+.input-fields label, .input-fields-jobs label {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -362,11 +373,12 @@ p em {
     margin-bottom: 5%;
 }
 
-.input-fields label p {
+.input-fields label p, .input-fields-jobs label p {
     color: var(--main-font-color);
 }
 
-.input-fields label input {
+.input-fields label input, .input-fields label select, .input-fields label textarea,
+.input-fields-jobs label input, .input-fields-jobs label select, .input-fields-jobs label textarea {
     margin-left: 1rem;
     background-color: var(--primary-light);
     border: none;
@@ -378,7 +390,32 @@ p em {
     font-size: 15px;
 }
 
-.input-fields label input::placeholder {
+.add-job-right label:first-of-type {
+    display: flex;
+    align-items: start;
+    justify-content: center;
+}
+
+.input-fields-jobs label select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24'><path fill='gray' d='M7 10l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 30px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.input-fields-jobs label textarea {
+    min-height: 120px;
+    resize: vertical;
+    font-size: 1rem;
+    padding: 2.5%;
+}
+
+.input-fields label input::placeholder,
+.input-fields-jobs label input::placeholder,
+.input-fields-jobs label textarea::placeholder {
     color: var(--placeholder-color);
 }
 

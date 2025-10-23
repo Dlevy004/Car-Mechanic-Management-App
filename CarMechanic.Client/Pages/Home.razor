@@ -9,6 +9,10 @@
                                                 CustomerToEdit="customerToEdit"
                                                 OnClose="ClosePanel" />
 
+<CarMechanic.Client.Components.AddJobPanel IsVisible="isAddJobPanelVisible"
+                                           JobToEdit="jobToEdit"
+                                           OnClose="ClosePanel" />
+
 <div class="panel-container @(showCustomers ? "show-customers" : "show-jobs")">
     <div class="panel customer-panel">
 		<CarMechanic.Client.Components.Customers @ref="customersComponent"

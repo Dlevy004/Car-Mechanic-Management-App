@@ -1,0 +1,146 @@
+﻿@inject HttpClient Http
+@using CarMechanic.Shared.Models
+@using CarMechanic.Shared.Enums
+
+<div id="overlay-jobs" class="overlay @(IsVisible ? "" : "hidden")">
+    <div class="add-job-panel">
+        <div class="add-panel-header">
+            <h2>@Title</h2>
+            <button class="closeBtn" @onclick="Close">
+                <img class="lightImg"
+                     src="./images/close_24dp_2D425C_FILL0_wght400_GRAD0_opsz24.svg"
+                     alt="Close icon">
+                <img class="darkImg"
+                     src="./images/close_24dp_E2E1E2_FILL0_wght400_GRAD0_opsz24.svg"
+                     alt="Close icon darkmode">
+            </button>
+        </div>
+
+        <EditForm Model="@job" OnValidSubmit="HandleValidSubmit">
+            <DataAnnotationsValidator />
+
+            <div class="input-fields-jobs">
+                <div class="add-job-left">
+                    <label>
+                        <p style="white-space: nowrap;">Customer ID</p>
+
+                        <InputSelect @bind-Value="job.CustomerId">
+                            <option value="0">Select a customer</option>
+                            @if (customers != null)
+                            {
+                                @foreach (var customer in customers)
+                                {
+                                    <option value="@customer.Id">@customer.Id - @customer.Name</option>
+                                }
+                            }
+                        </InputSelect>
+                        <ValidationMessage For="@(() => job.CustomerId)" />
+                    </label>
+
+                    <label>
+                        <p style="white-space: nowrap;">License Plate Number</p>
+                        <InputText @bind-Value="job.LicensePlateNumber" placeholder="ABC-123" />
+                        <ValidationMessage For="@(() => job.LicensePlateNumber)" />
+                    </label>
+
+                    <label>
+                        <p style="white-space: nowrap;">Vehicle Year</p>
+                        <InputNumber @bind-Value="job.VehicleYear" placeholder="Year of manufacture" />
+                        <ValidationMessage For="@(() => job.VehicleYear)" />
+                    </label>
+
+                    <label>
+                        <p style="white-space: nowrap;">Job category</p>
+                        <InputSelect @bind-Value="job.JobCategory">
+                            @foreach (var category in Enum.GetValues(typeof(JobCategory)))
+                            {
+                                <option value="@category">@category</option>
+                            }
+                        </InputSelect>
+                    </label>
+                </div>
+
+                <div class="add-job-right">
+                    <label>
+                        <p>Vehicle Issue Description</p>
+                        <InputTextArea @bind-Value="job.VehicleIssueDescription" placeholder="Please write..." rows="6" />
+                        <ValidationMessage For="@(() => job.VehicleIssueDescription)" />
+                    </label>
+
+                    <label>
+                        <p>Severity</p>
+                        <InputSelect @bind-Value="job.Severity">
+                            @for (int i = 1; i <= 10; i++)
+                            {
+                                <option value="@i">@i</option>
+                            }
+                        </InputSelect>
+                    </label>
+
+                    <label>
+                        <p style="white-space: nowrap;">Job stage</p>
+                        <InputSelect @bind-Value="job.JobStage">
+                            @foreach (var status in Enum.GetValues(typeof(JobStage)))
+                            {
+                                <option value="@status">@status</option>
+                            }
+                        </InputSelect>
+                    </label>
+                </div>
+            </div>
+
+            <div class="add-panel-buttons">
+                <button type="submit" class="save">Save</button>
+            </div>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+    [Parameter] public bool IsVisible { get; set; } = false;
+    [Parameter] public Job JobToEdit { get; set; }
+    [Parameter] public EventCallback OnClose { get; set; }
+
+    private Job job = new();
+    private string Title = "Add New Job";
+    private List<Customer> customers;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Load customers for the dropdown
+        customers = await Http.GetFromJsonAsync<List<Customer>>("api/customers");
+    }
+
+    protected override void OnParametersSet()
+    {
+        if (JobToEdit != null)
+        {
+            job = JobToEdit;
+            Title = "Edit Job";
+        }
+        else
+        {
+            job = new();
+            Title = "Add New Job";
+        }
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        if (job.Id == 0)
+        {
+            await Http.PostAsJsonAsync("api/jobs", job);
+        }
+        else
+        {
+            await Http.PutAsJsonAsync($"api/jobs/{job.Id}", job);
+        }
+        await Close();
+    }
+
+    private async Task Close()
+    {
+        job = new();
+        await OnClose.InvokeAsync();
+    }
+}
