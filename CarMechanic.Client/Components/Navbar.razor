@@ -1,5 +1,7 @@
 ﻿@inject IJSRuntime JS
 @inject NavigationManager NavigationManager
+@inject IAuthService AuthService
+@using CarMechanic.Client.Services
 
 <header id="header"> 
     <div class="icons">
@@ -81,9 +83,10 @@
         profileVisible = false;
     }
 
-    private void HandleUserLogout()
+    private async Task HandleUserLogout()
     {
-		NavigationManager.NavigateTo("/");
+        await AuthService.Logout();
+        NavigationManager.NavigateTo("/");
     }
 }
 

@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using CarMechanic.Shared.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CarMechanic.Server.Controllers
 {
     [ApiController]
     [Route("api/customers")]
+    [Authorize(Roles = "Admin, Mechanic")]
     public class CustomerController : ControllerBase
     {
         private readonly ICustomerService _customerService;
@@ -53,6 +55,7 @@ namespace CarMechanic.Server.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteAsync(int id)
         {
             await _customerService.DeleteCustomerAsync(id);
