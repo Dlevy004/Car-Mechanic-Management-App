@@ -9,11 +9,6 @@
     <td>@Job.JobStage.ToString()</td>
     <td>@WorkHourEstimation.ToString("0.0") hours</td>
     <td class="actions">
-        <button class="jobDetails" @onclick="() => OnViewDetails.InvokeAsync(Job.Id)">
-            <img class="anim lightImg" src="./images/open_in_new_24dp_2D425C_FILL1_wght400_GRAD0_opsz24.svg" alt="Details icon">
-            <img class="anim darkImg" src="./images/open_in_new_24dp_E2E1E2_FILL1_wght400_GRAD0_opsz24.svg" alt="Details icon darkmode">
-        </button>
-
         <button class="addJobBtn" @onclick="() => OnEdit.InvokeAsync(Job)">
             <img class="anim lightImg" src="./images/edit_square_24dp_2D425C_FILL0_wght400_GRAD0_opsz24.svg" alt="Edit job icon">
             <img class="anim darkImg" src="./images/edit_square_24dp_E2E1E2_FILL0_wght400_GRAD0_opsz24.svg" alt="Edit job icon darkmode">
