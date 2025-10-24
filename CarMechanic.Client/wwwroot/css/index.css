@@ -144,7 +144,7 @@
 .panel-container #customers-section,
 .panel-container #jobs-section {
     width: 90%;
-    margin: 12% auto 4rem;
+    margin: 8% auto 4rem;
     font-family: var(--primary-font-family);
 }
 
