@@ -1,0 +1,53 @@
+﻿@page "/"
+
+@using CarMechanic.Shared.Models
+
+@inject NavigationManager NavigationManager
+
+<div class="container">
+    <div class="forms">
+        <div class="form login">
+            <img src="./images/logo.png" alt="Car Mechanic Logo">
+            <span class="title">Login</span>
+
+
+            <EditForm Model="@loginModel" OnValidSubmit="HandleLogin">
+                <DataAnnotationsValidator />
+
+                <div class="input-field">
+                    <InputText @bind-Value=loginModel.Email typeof="email" placeholder="Email" />
+                    <img class="icon" src="./images/mail_24dp_2D425C_FILL0_wght400_GRAD0_opsz24.svg" alt="Email icon">
+                </div>
+
+                <div class="input-field">
+                    <InputText @bind-Value="loginModel.Password" type="password" placeholder="Password" />
+                    <img class="icon" src="./images/lock_24dp_2D425C_FILL0_wght400_GRAD0_opsz24.svg" alt="Lock icon">
+                </div>
+
+                @if (!string.IsNullOrEmpty(errorMessage))
+                {
+                    <div style="color: red; text-align: center; margin-top: 10px;">
+                        @errorMessage
+                    </div>
+                }
+
+                <div class="input-field button">
+                    <button type="submit"
+                    id="loginBtn">
+                        Login
+                    </button>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+@code {
+    private LoginModel loginModel = new();
+    private string? errorMessage;
+
+    private async Task HandleLogin()
+    {
+       NavigationManager.NavigateTo("/dashboard");
+    }
+}
