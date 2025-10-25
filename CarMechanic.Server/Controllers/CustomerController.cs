@@ -6,7 +6,7 @@ namespace CarMechanic.Server.Controllers
 {
     [ApiController]
     [Route("api/customers")]
-    [Authorize(Roles = "Admin, Mechanic")]
+    [Authorize(Roles = "Admin,Mechanic")]
     public class CustomerController : ControllerBase
     {
         private readonly ICustomerService _customerService;

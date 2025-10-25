@@ -1,11 +1,13 @@
 ﻿using CarMechanic.Server;
 using CarMechanic.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CarMechanic.Server.Controllers
 {
     [ApiController]
     [Route("api/jobs")]
+    [Authorize(Roles = "Admin,Mechanic")]
     public class JobController : ControllerBase
     {
         private readonly IJobService _jobService;
@@ -53,6 +55,7 @@ namespace CarMechanic.Server.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteAsync(int id)
         {
             await _jobService.DeleteJobAsync(id);

@@ -1,8 +1,10 @@
 ﻿@page "/"
 
 @using CarMechanic.Shared.Models
+@using CarMechanic.Client.Services
 
 @inject NavigationManager NavigationManager
+@inject IAuthService AuthService
 
 <div class="container">
     <div class="forms">
@@ -48,6 +50,16 @@
 
     private async Task HandleLogin()
     {
-       NavigationManager.NavigateTo("/dashboard");
+        errorMessage = null;
+        var result = await AuthService.Login(loginModel);
+
+        if (result != null && !string.IsNullOrEmpty(result.Token))
+        {
+            NavigationManager.NavigateTo("/dashboard");
+        }
+        else
+        {
+            errorMessage = "Incorrect email or password.";
+        }
     }
 }
