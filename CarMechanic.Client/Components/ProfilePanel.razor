@@ -2,7 +2,15 @@
     <div class="profile-info">
         <div class="profile-info-header">
             <img src="./images/account_circle_24dp_2D425C_FILL1_wght400_GRAD0_opsz24.svg" alt="Profile icon">
-            <p>Admin</p>
+
+			<Microsoft.AspNetCore.Components.Authorization.AuthorizeView Roles="Admin">
+                <p>Admin</p>
+            </Microsoft.AspNetCore.Components.Authorization.AuthorizeView>
+
+            <Microsoft.AspNetCore.Components.Authorization.AuthorizeView Roles="Mechanic">
+                <p>Mechanic</p>
+            </Microsoft.AspNetCore.Components.Authorization.AuthorizeView>
+
         </div>
         <button class="closeBtn" @onclick="() => OnClose.InvokeAsync()">
             <img src="./images/close_24dp_2D425C_FILL0_wght400_GRAD0_opsz24.svg" alt="Close icon">
