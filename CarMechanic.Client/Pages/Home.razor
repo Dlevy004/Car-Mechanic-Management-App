@@ -1,9 +1,12 @@
 ﻿@page "/dashboard"
 
 @using CarMechanic.Shared.Models;
+@using System.Text;
+@inject IJSRuntime JS;
 
 <CarMechanic.Client.Components.Navbar showCustomers="showCustomers"
-                                      OnPanelChange="PanelChanged" />
+                                      OnPanelChange="PanelChanged"
+                                      OnDownloadClicked="HandleDownload"/>
 
 <CarMechanic.Client.Components.AddCustomerPanel IsVisible="isAddCustomerPanelVisible"
                                                 CustomerToEdit="customerToEdit"
@@ -72,5 +75,47 @@
         {
             await jobsComponent.LoadJobs();
         }
+    }
+
+    private async Task HandleDownload()
+    {
+        var csvBuilder = new StringBuilder();
+        string fileName;
+
+        if (showCustomers)
+        {
+            fileName = "customers_export.csv";
+            // Fejléc
+            csvBuilder.AppendLine("Id,Name,Email,Address");
+
+            // Adatok
+            var listToDownload = customersComponent.FilteredCustomers;
+            if (listToDownload != null)
+            {
+                foreach (var customer in listToDownload)
+                {
+                    csvBuilder.AppendLine($"\"{customer.Id}\",\"{customer.Name}\",\"{customer.Email}\",\"{customer.Address}\"");
+                }
+            }
+        }
+        else
+        {
+            fileName = "jobs_export.csv";
+            // Fejléc
+            csvBuilder.AppendLine("Id,CustomerId,LicensePlateNumber,VehicleYear,JobCategory,Severity,JobStage,IssueDescription");
+
+            // Adatok
+            var listToDownload = jobsComponent.FilteredJobs;
+            if (listToDownload != null)
+            {
+                foreach (var job in listToDownload)
+                {
+                    var description = job.VehicleIssueDescription?.Replace("\"", "\"\"") ?? "";
+                    csvBuilder.AppendLine($"\"{job.Id}\",\"{job.CustomerId}\",\"{job.LicensePlateNumber}\",\"{job.VehicleYear}\",\"{job.JobCategory}\",\"{job.Severity}\",\"{job.JobStage}\",\"{description}\""); // Idézőjelek a leírás köré is
+                }
+            }
+        }
+
+        await JS.InvokeVoidAsync("downloadFile", fileName, csvBuilder.ToString());
     }
 }

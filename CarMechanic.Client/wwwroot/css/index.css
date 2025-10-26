@@ -19,7 +19,7 @@
     gap: 3rem;
 }
 
-#searchLight, #searchDark, .theme-switch img {
+#downloadLight, #downloadDark, .theme-switch img {
     transform: scale(1.5);
 }
 
@@ -184,6 +184,10 @@ p em {
 
 .table-header img {
     transform: scale(2);
+}
+
+#searchLight, #searchDark {
+    transform: scale(1.5);
 }
 
 .data-table {

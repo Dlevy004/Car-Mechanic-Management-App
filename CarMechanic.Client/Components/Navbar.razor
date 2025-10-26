@@ -5,12 +5,14 @@
 
 <header id="header"> 
     <div class="icons">
-        <img id="searchLight" class="icon anim lightImg" 
-            src="./images/search_24dp_2D425C_FILL0_wght400_GRAD0_opsz24.svg" 
-            alt="Search Icon">
-        <img id="searchDark" class="icon anim darkImg" 
-            src="./images/search_24dp_E2E1E2_FILL1_wght400_GRAD0_opsz24.svg" 
-            alt="Search icon in darkmode">
+		<img @onclick="() => OnDownloadClicked.InvokeAsync()"
+            id="downloadLight" class="icon anim lightImg" 
+            src="./images/download_for_offline_24dp_2D425C_FILL1_wght400_GRAD0_opsz24.svg" 
+            alt="Download Icon">
+		<img @onclick="() => OnDownloadClicked.InvokeAsync()"
+			 id="downloadDark" class="icon anim darkImg" 
+            src="./images/download_for_offline_24dp_E2E1E2_FILL1_wght400_GRAD0_opsz24.svg" 
+            alt="Download icon in darkmode">
 
         <img @onclick="ToggleProfilePanel"
             id="profileLight" class="icon anim lightImg" 
@@ -61,6 +63,7 @@
 
     [Parameter] public bool showCustomers { get; set; }
     [Parameter] public EventCallback<bool> OnPanelChange { get; set; }
+	[Parameter] public EventCallback OnDownloadClicked { get; set; }
 
     private async Task SetBodyClass(string className, bool add) 
         => await JS.InvokeVoidAsync(
