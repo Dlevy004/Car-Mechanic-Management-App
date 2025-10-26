@@ -5,30 +5,43 @@
 
 <section id="jobs-section">
     <div class="table-header">
-        <button class="viewSwitch" data-panel="customer" @onclick="ToggleView">
-            <img class="anim lightImg listView
-                @(cardViewVisible ? "" : "hidden")"
-                 src="./images/lists_24dp_2D425C_FILL0_wght400_GRAD0_opsz24.svg"
-                 alt="List View">
-            <img class="anim darkImg listView
-                 @(cardViewVisible ? "" : "hidden")"
-                 src="./images/lists_24dp_E2E1E2_FILL0_wght400_GRAD0_opsz24.svg"
-                 alt="List View switch icon darkmode">
+        <div>
+            <img id="searchLight" class="icon anim lightImg"
+                 src="./images/search_24dp_2D425C_FILL0_wght400_GRAD0_opsz24.svg"
+                 alt="Search Icon">
+            <img id="searchDark" class="icon anim darkImg"
+                 src="./images/search_24dp_E2E1E2_FILL1_wght400_GRAD0_opsz24.svg"
+                 alt="Search icon in darkmode">
+            <input @bind-Value="searchTerm" @bind-Value:event="oninput" type="text"
+            placeholder="Search by job" />
+        </div>
 
-            <img class="anim lightImg cardView
-                @(cardViewVisible ? "hidden" : "")"
-                 src="./images/grid_view_24dp_2D425C_FILL1_wght400_GRAD0_opsz24.svg"
-                 alt="Card View">
-            <img class="anim darkImg cardView
-                @(cardViewVisible ? "hidden" : "")"
-                 src="./images/grid_view_24dp_E2E1E2_FILL1_wght400_GRAD0_opsz24.svg"
-                 alt="Card View switch icon darkmode">
-        </button>
+        <div>
+            <button class="viewSwitch" data-panel="customer" @onclick="ToggleView">
+                <img class="anim lightImg listView
+                    @(cardViewVisible ? "" : "hidden")"
+                src="./images/lists_24dp_2D425C_FILL0_wght400_GRAD0_opsz24.svg"
+                alt="List View">
+                <img class="anim darkImg listView
+                     @(cardViewVisible ? "" : "hidden")"
+                src="./images/lists_24dp_E2E1E2_FILL0_wght400_GRAD0_opsz24.svg"
+                alt="List View switch icon darkmode">
 
-        <button class="addCustomerBtn" @onclick="() => OnAddJob.InvokeAsync(null)">
-            <img class="anim lightImg" src="./images/add_box_24dp_2D425C_FILL1_wght400_GRAD0_opsz24.svg" alt="Add new Customer icon">
-            <img class="anim darkImg" src="./images/add_box_24dp_E2E1E2_FILL1_wght400_GRAD0_opsz24.svg" alt="Add new Customer icon darkmode">
-        </button>
+                <img class="anim lightImg cardView
+                    @(cardViewVisible ? "hidden" : "")"
+                src="./images/grid_view_24dp_2D425C_FILL1_wght400_GRAD0_opsz24.svg"
+                alt="Card View">
+                <img class="anim darkImg cardView
+                    @(cardViewVisible ? "hidden" : "")"
+                src="./images/grid_view_24dp_E2E1E2_FILL1_wght400_GRAD0_opsz24.svg"
+                alt="Card View switch icon darkmode">
+            </button>
+
+            <button class="addCustomerBtn" @onclick="() => OnAddJob.InvokeAsync(null)">
+                <img class="anim lightImg" src="./images/add_box_24dp_2D425C_FILL1_wght400_GRAD0_opsz24.svg" alt="Add new Customer icon">
+                <img class="anim darkImg" src="./images/add_box_24dp_E2E1E2_FILL1_wght400_GRAD0_opsz24.svg" alt="Add new Customer icon darkmode">
+            </button>
+        </div>
     </div>
 
     @if (jobList == null)
@@ -50,25 +63,25 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var job in jobList)
+                @foreach (var job in FilteredJobs)
                 {
                     <JobsListItem Job="job"
-                                  WorkHourEstimation="@CalculateWorkHourEstimation(job)"
-                                  OnViewDetails="() => HandleViewDetails(job)"
-                                  OnEdit="() => HandleEdit(job)"
-                                  OnDelete="() => HandleDelete(job)" />
+                    WorkHourEstimation="@CalculateWorkHourEstimation(job)"
+                    OnViewDetails="() => HandleViewDetails(job)"
+                    OnEdit="() => HandleEdit(job)"
+                    OnDelete="() => HandleDelete(job)" />
                 }
             </tbody>
         </table>
 
         <div class="card-container @(cardViewVisible ? "" : "hidden")">
-            @foreach (var job in jobList)
+            @foreach (var job in FilteredJobs)
             {
                 <JobCardItem Job="job"
-                             WorkHourEstimation="@CalculateWorkHourEstimation(job)"
-                             OnViewDetails="() => HandleViewDetails(job)"
-                             OnEdit="() => HandleEdit(job)"
-                             OnDelete="() => HandleDelete(job)" />
+                WorkHourEstimation="@CalculateWorkHourEstimation(job)"
+                OnViewDetails="() => HandleViewDetails(job)"
+                OnEdit="() => HandleEdit(job)"
+                OnDelete="() => HandleDelete(job)" />
             }
         </div>
     }
@@ -80,6 +93,30 @@
 
     private List<Job> jobList;
     private bool cardViewVisible = false;
+
+    private string searchTerm = string.Empty;
+
+    private List<Job> FilteredJobs
+    {
+        get
+        {
+            if (jobList is null)
+            {
+                return new List<Job>();
+            }
+
+            if (string.IsNullOrWhiteSpace(searchTerm))
+            {
+                return jobList;
+            }
+
+            return jobList.Where(j =>
+                j.CustomerId.ToString().Contains(searchTerm) ||
+                j.LicensePlateNumber.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                j.VehicleIssueDescription.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)
+            ).ToList();
+        }    
+    }
 
     protected override async Task OnInitializedAsync()
     {

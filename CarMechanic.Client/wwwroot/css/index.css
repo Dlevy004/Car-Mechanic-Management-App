@@ -155,10 +155,31 @@ p em {
 
 .table-header {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     margin-bottom: 1rem;
-    gap: 2%;
+}
+
+.table-header div:last-of-type button:first-of-type {
+    margin-right: 1.5rem;
+}
+
+.table-header div:first-of-type input {
+    width: 100%;
+    min-height: 40px;
+    padding: 0 1rem;
+    border-radius: 10px;
+    border-radius: 10px;
+    border: 1px solid grey;
+    background-color: white;
+    color: grey;
+    margin-left: 1rem;
+}
+
+.table-header div:first-of-type {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .table-header img {

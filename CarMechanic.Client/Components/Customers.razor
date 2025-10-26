@@ -5,30 +5,43 @@
 <section id="customers-section">
     <!-- view change and add btn -->
     <div class="table-header">
-        <button class="viewSwitch" data-panel="customer" @onclick="ToggleView">
-            <img class="anim lightImg listView
-                @(cardViewVisible ? "" : "hidden")"
-            src="./images/lists_24dp_2D425C_FILL0_wght400_GRAD0_opsz24.svg" 
-            alt="List View">
-            <img class="anim darkImg listView
-                 @(cardViewVisible ? "" : "hidden")"
-            src="./images/lists_24dp_E2E1E2_FILL0_wght400_GRAD0_opsz24.svg" 
-            alt="List View switch icon darkmode">
+        <div>
+            <img id="searchLight" class="icon anim lightImg"
+                 src="./images/search_24dp_2D425C_FILL0_wght400_GRAD0_opsz24.svg"
+                 alt="Search Icon">
+            <img id="searchDark" class="icon anim darkImg"
+                 src="./images/search_24dp_E2E1E2_FILL1_wght400_GRAD0_opsz24.svg"
+                 alt="Search icon in darkmode">
+            <input @bind-Value="searchTerm" @bind-Value:event="oninput" type="text"
+                placeholder="Search by customer" />
+        </div>
 
-            <img class="anim lightImg cardView
-                @(cardViewVisible ? "hidden" : "")"
-            src="./images/grid_view_24dp_2D425C_FILL1_wght400_GRAD0_opsz24.svg" 
-            alt="Card View">
-            <img class="anim darkImg cardView
-                @(cardViewVisible ? "hidden" : "")"
-            src="./images/grid_view_24dp_E2E1E2_FILL1_wght400_GRAD0_opsz24.svg" 
-            alt="Card View switch icon darkmode">
-        </button>
+        <div>
+            <button class="viewSwitch" data-panel="customer" @onclick="ToggleView">
+                <img class="anim lightImg listView
+                    @(cardViewVisible ? "" : "hidden")"
+                src="./images/lists_24dp_2D425C_FILL0_wght400_GRAD0_opsz24.svg" 
+                alt="List View">
+                <img class="anim darkImg listView
+                     @(cardViewVisible ? "" : "hidden")"
+                src="./images/lists_24dp_E2E1E2_FILL0_wght400_GRAD0_opsz24.svg" 
+                alt="List View switch icon darkmode">
 
-        <button class="addCustomerBtn" @onclick="() => OnAddCustomer.InvokeAsync(null)">
-            <img class="anim lightImg" src="./images/add_box_24dp_2D425C_FILL1_wght400_GRAD0_opsz24.svg" alt="Add new Customer icon">
-            <img class="anim darkImg" src="./images/add_box_24dp_E2E1E2_FILL1_wght400_GRAD0_opsz24.svg" alt="Add new Customer icon darkmode">
-        </button>
+                <img class="anim lightImg cardView
+                    @(cardViewVisible ? "hidden" : "")"
+                src="./images/grid_view_24dp_2D425C_FILL1_wght400_GRAD0_opsz24.svg" 
+                alt="Card View">
+                <img class="anim darkImg cardView
+                    @(cardViewVisible ? "hidden" : "")"
+                src="./images/grid_view_24dp_E2E1E2_FILL1_wght400_GRAD0_opsz24.svg" 
+                alt="Card View switch icon darkmode">
+            </button>
+
+            <button class="addCustomerBtn" @onclick="() => OnAddCustomer.InvokeAsync(null)">
+                <img class="anim lightImg" src="./images/add_box_24dp_2D425C_FILL1_wght400_GRAD0_opsz24.svg" alt="Add new Customer icon">
+                <img class="anim darkImg" src="./images/add_box_24dp_E2E1E2_FILL1_wght400_GRAD0_opsz24.svg" alt="Add new Customer icon darkmode">
+            </button>
+        </div>
     </div>
 
     @if (customerList == null)
@@ -52,11 +65,11 @@
             <tbody>
                 @if (customerList != null)
                 {
-                    @foreach (var customer in customerList)
+                    @foreach (var customer in FilteredCustomers)
                     {
                         <CustomerListItem Customer="customer"
-                                          OnEdit="() => HandleEdit(customer)"
-                                          OnDelete="() => HandleDelete(customer)" />
+                        OnEdit="() => HandleEdit(customer)"
+                        OnDelete="() => HandleDelete(customer)" />
                     }
                 }
             </tbody>
@@ -66,11 +79,11 @@
         <div class="card-container @(cardViewVisible ? "" : "hidden")">
             @if (customerList != null)
             {
-                @foreach (var customer in customerList)
+                @foreach (var customer in FilteredCustomers)
                 {
                     <CustomerCardItem Customer="customer"
-                                      OnEdit="() => HandleEdit(customer)"
-                                      OnDelete="() => HandleDelete(customer)" />
+                    OnEdit="() => HandleEdit(customer)"
+                    OnDelete="() => HandleDelete(customer)" />
                 }
             }
         </div>
@@ -78,9 +91,33 @@
 </section>
 
 @code {
-	[Parameter] public EventCallback<Customer> OnAddCustomer { get; set; }
+    [Parameter] public EventCallback<Customer> OnAddCustomer { get; set; }
     private bool cardViewVisible = false;
     private List<Customer> customerList;
+
+    private string searchTerm = string.Empty;
+
+    private List<Customer> FilteredCustomers
+    {
+        get
+        {
+            if (customerList is null)
+            {
+                return new List<Customer>();
+            }
+
+			if (string.IsNullOrWhiteSpace(searchTerm))
+			{
+				return customerList;
+			}
+
+			return customerList.Where(c =>
+				c.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+				c.Email.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+				c.Address.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)
+			).ToList();
+		}
+    }
 
     public async Task LoadCustomers()
     {
