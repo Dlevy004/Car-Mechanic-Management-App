@@ -2,6 +2,7 @@
 using CarMechanic.Server;
 using CarMechanic.Shared.Models;
 using Microsoft.EntityFrameworkCore;
+using CarMechanic.Shared.Enums;
 
 namespace CarMechanic.Server
 {
@@ -43,6 +44,18 @@ namespace CarMechanic.Server
 
         public async Task UpdateJobAsync(Job job)
         {
+            var existingJob = await _context.Jobs.AsNoTracking().FirstOrDefaultAsync(j => j.Id == job.Id);
+
+            if (existingJob == null)
+            {
+                throw new KeyNotFoundException($"Job with Id {job.Id} not found.");
+            }
+
+            if (job.JobStage < existingJob.JobStage)
+            {
+                throw new InvalidOperationException("Cannot regress job stage to a previous stage.");
+            }
+
             _context.Entry(job).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }

@@ -8,11 +8,11 @@
             <h2>@Title</h2>
             <button class="closeBtn" @onclick="Close">
                 <img class="lightImg"
-                     src="./images/close_24dp_2D425C_FILL0_wght400_GRAD0_opsz24.svg"
-                     alt="Close icon">
+                src="./images/close_24dp_2D425C_FILL0_wght400_GRAD0_opsz24.svg"
+                alt="Close icon">
                 <img class="darkImg"
-                     src="./images/close_24dp_E2E1E2_FILL0_wght400_GRAD0_opsz24.svg"
-                     alt="Close icon darkmode">
+                src="./images/close_24dp_E2E1E2_FILL0_wght400_GRAD0_opsz24.svg"
+                alt="Close icon darkmode">
             </button>
         </div>
 
@@ -80,7 +80,7 @@
                     <label>
                         <p style="white-space: nowrap;">Job stage</p>
                         <InputSelect @bind-Value="job.JobStage">
-                            @foreach (var status in Enum.GetValues(typeof(JobStage)))
+                            @foreach (var status in availableJobStages)
                             {
                                 <option value="@status">@status</option>
                             }
@@ -105,6 +105,8 @@
     private string Title = "Add New Job";
     private List<Customer> customers;
 
+    private List<JobStage> availableJobStages = new();
+
     protected override async Task OnInitializedAsync()
     {
         // Load customers for the dropdown
@@ -117,11 +119,28 @@
         {
             job = JobToEdit;
             Title = "Edit Job";
+
+			// job stage váltásának korlátozása
+			if (job.JobStage == JobStage.ToDo)
+			{
+				availableJobStages = new List<JobStage> { JobStage.InProgress };
+			}
+			else if (job.JobStage == JobStage.InProgress)
+			{
+				availableJobStages = new List<JobStage> { JobStage.Done };
+			}
+			else
+			{
+				availableJobStages = new List<JobStage> { JobStage.Done };
+			}
         }
         else
         {
             job = new();
             Title = "Add New Job";
+
+			// új melónál todo státus az alapértelmezett
+			availableJobStages = new List<JobStage> { JobStage.ToDo };
         }
     }
 
