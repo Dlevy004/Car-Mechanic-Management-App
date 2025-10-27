@@ -431,6 +431,23 @@ p em {
     transition: all 0.2s ease;
 }
 
+.table-header div:first-of-type select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24'><path fill='gray' d='M7 10l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 0.1rem center;
+    background-size: 25px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-left: 1rem;
+    padding: 0.5rem;
+}
+
+    .table-header div:first-of-type select option {
+        text-align: left;
+        
+    }
+
 .input-fields-jobs label textarea {
     min-height: 120px;
     resize: vertical;

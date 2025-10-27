@@ -7,13 +7,23 @@
     <div class="table-header">
         <div>
             <img id="searchLight" class="icon anim lightImg"
-                 src="./images/search_24dp_2D425C_FILL0_wght400_GRAD0_opsz24.svg"
-                 alt="Search Icon">
+            src="./images/search_24dp_2D425C_FILL0_wght400_GRAD0_opsz24.svg"
+            alt="Search Icon">
             <img id="searchDark" class="icon anim darkImg"
-                 src="./images/search_24dp_E2E1E2_FILL1_wght400_GRAD0_opsz24.svg"
-                 alt="Search icon in darkmode">
+            src="./images/search_24dp_E2E1E2_FILL1_wght400_GRAD0_opsz24.svg"
+            alt="Search icon in darkmode">
             <input @bind-Value="searchTerm" @bind-Value:event="oninput" type="text"
             placeholder="Search by job" />
+
+            <select @bind="selectedCustomerId" class="form-select" style="min-height: 40px; border-radius: 10px; border: 1px solid grey; max-width: 250px;">
+                <option value="0">All Customers</option> @if (customers != null)
+                {
+                    @foreach (var customer in customers)
+                    {
+                        <option value="@customer.Id">@customer.Name (@customer.Id)</option>
+                    }
+                }
+            </select>
         </div>
 
         <div>
@@ -96,6 +106,9 @@
 
     private string searchTerm = string.Empty;
 
+    private int selectedCustomerId = 0;
+    private List<Customer> customers;
+
     public List<Job> FilteredJobs
     {
         get
@@ -105,27 +118,41 @@
                 return new List<Job>();
             }
 
-            if (string.IsNullOrWhiteSpace(searchTerm))
+			IEnumerable<Job> filtered = jobList;
+
+            if (selectedCustomerId != 0)
             {
-                return jobList;
+                filtered = filtered.Where(j => j.CustomerId == selectedCustomerId);
             }
 
-            return jobList.Where(j =>
-                j.CustomerId.ToString().Contains(searchTerm) ||
-                j.LicensePlateNumber.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
-                j.VehicleIssueDescription.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)
-            ).ToList();
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                filtered = filtered.Where(j =>
+                    j.CustomerId.ToString().Contains(searchTerm) ||
+                    j.LicensePlateNumber.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                    j.VehicleIssueDescription.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)
+                );
+            }
+
+            return filtered.ToList();
         }    
     }
 
     protected override async Task OnInitializedAsync()
     {
         await LoadJobs();
+        await LoadCustomersForDropdown();
     }
 
     public async Task LoadJobs()
     {
         jobList = await Http.GetFromJsonAsync<List<Job>>("api/jobs");
+        StateHasChanged();
+    }
+
+    private async Task LoadCustomersForDropdown()
+    {
+        customers = await Http.GetFromJsonAsync<List<Customer>>("api/customers");
         StateHasChanged();
     }
 
