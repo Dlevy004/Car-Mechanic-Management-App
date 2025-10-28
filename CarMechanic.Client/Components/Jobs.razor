@@ -77,7 +77,7 @@
                 @foreach (var job in FilteredJobs)
                 {
                     <JobsListItem Job="job"
-                    WorkHourEstimation="CalculationHelper.CalculationCalculateWorkHourEstimation(job)"
+                    WorkHourEstimation="CalculationHelper.CalculateWorkHourEstimation(job)"
                     OnViewDetails="() => HandleViewDetails(job)"
                     OnEdit="() => HandleEdit(job)"
                     OnDelete="() => HandleDelete(job)" />
