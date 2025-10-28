@@ -34,10 +34,11 @@ A projekt egy webes alkalmazás egy autószerelő műhely számára az ügyfelek
 * **Alapkövetelmények:** 
     - Git repo rendszeres commitokkal, .NET 9 használata
     - 1 solution: `CarMechanicManagementApp.sln`
-    - 3 projekt:
+    - 4 projekt:
         - ASP.NET Core Web API projekt (Server)
         - Blazor WebAssembly Standalone App projekt (Client)
         - Közös projekt (Shared) a modellek számára
+        - Teszt projekt (Tests) UNIT tesztekhez
     - Buildelhető és futtatható
 
 * **Funkcionális:**
@@ -46,8 +47,8 @@ A projekt egy webes alkalmazás egy autószerelő műhely számára az ügyfelek
     - Munkaóra esztimáció számítása, megjelenítése
 
 * **Technikai:**
-    - UNIT tesztek a WebApi service-ekre *(Még hiányzik)*
-    - Munkaóra esztimáció tesztelése *(Még hiányzik)*
+    - UNIT tesztek a WebApi service-ekre
+    - Munkaóra esztimáció tesztelése
     - Adatbázis kezelés EF használatával  
     - Model validáció (Front- és Backend)  
     - Specifikus validációk (Email, Rendszám, Év, Kategória, Súlyosság, Állapot)  
