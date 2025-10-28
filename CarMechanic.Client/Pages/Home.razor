@@ -111,7 +111,7 @@
                 foreach (var job in listToDownload)
                 {
                     var description = job.VehicleIssueDescription?.Replace("\"", "\"\"") ?? "";
-                    csvBuilder.AppendLine($"\"{job.Id}\",\"{job.CustomerId}\",\"{job.LicensePlateNumber}\",\"{job.VehicleYear}\",\"{job.JobCategory}\",\"{job.Severity}\",\"{job.JobStage}\",\"{description}\""); // Idézőjelek a leírás köré is
+                    csvBuilder.AppendLine($"\"{job.Id}\",\"{job.CustomerId}\",\"{job.LicensePlateNumber}\",\"{job.VehicleYear:yyyy-MM-dd}\",\"{job.JobCategory}\",\"{job.Severity}\",\"{job.JobStage}\",\"{description}\""); // Idézőjelek a leírás köré is
                 }
             }
         }

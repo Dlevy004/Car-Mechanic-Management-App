@@ -190,7 +190,7 @@
             _ => 0
         };
 
-        int carAge = DateTime.Now.Year - job.VehicleYear;
+        int carAge = DateTime.Now.Year - job.VehicleYear.Year;
         double ageMultiplier = carAge switch
         {
             var age when age >= 0 && age < 5 => 0.5,

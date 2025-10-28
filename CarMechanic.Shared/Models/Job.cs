@@ -14,8 +14,9 @@ namespace CarMechanic.Shared.Models
         [RegularExpression(@"^[A-Z]{3}-\d{3}$", ErrorMessage = "The license plate format is incorrect (e.g. ABC-123).")]
         public string LicensePlateNumber { get; set; }
 
-        [Range(1900, 2100, ErrorMessage = "The year of manufacture must be between 1900 and 2100.")]
-        public int VehicleYear { get; set; }
+        [Required(ErrorMessage = "The date of manufacture is required.")]
+        [Range(typeof(DateTime), "1900-01-01", "2025-12-31", ErrorMessage = "The date of manufacture must be between 1900 and 2025.")]
+        public DateTime VehicleYear { get; set; }
         public JobCategory JobCategory { get; set; }
 
         [Required(ErrorMessage = "The issue description is required.")]
