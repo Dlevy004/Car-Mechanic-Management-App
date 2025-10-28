@@ -15,7 +15,7 @@
             <input @bind-Value="searchTerm" @bind-Value:event="oninput" type="text"
             placeholder="Search by job" />
 
-            <select @bind="selectedCustomerId" class="form-select" style="min-height: 40px; border-radius: 10px; border: 1px solid grey; max-width: 250px;">
+            <select @bind="selectedCustomerId" class="form-select" style="min-height: 40px; border-radius: 10px; border: 1px solid grey; width: 300px; max-width: 350px;">
                 <option value="0">All Customers</option> @if (customers != null)
                 {
                     @foreach (var customer in customers)
