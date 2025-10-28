@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarMechanic.Client", "..\Ca
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarMechanic.Shared", "..\CarMechanic.Shared\CarMechanic.Shared.csproj", "{7B3B1F59-2912-4807-B38D-51A80B15FC12}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarMechanic.Tests", "..\CarMechanic.Tests\CarMechanic.Tests.csproj", "{D07859D0-07EA-4171-9925-E6FF3376FA09}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{7B3B1F59-2912-4807-B38D-51A80B15FC12}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B3B1F59-2912-4807-B38D-51A80B15FC12}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B3B1F59-2912-4807-B38D-51A80B15FC12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D07859D0-07EA-4171-9925-E6FF3376FA09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D07859D0-07EA-4171-9925-E6FF3376FA09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D07859D0-07EA-4171-9925-E6FF3376FA09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D07859D0-07EA-4171-9925-E6FF3376FA09}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
