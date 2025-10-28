@@ -61,6 +61,19 @@ A projekt egy webes alkalmazás egy autószerelő műhely számára az ügyfelek
 
 ---
 
+## 🔒 Bejelentkezés
+
+Az alkalmazás használatához bejelentkezés szükséges. Az alapértelmezett felhasználói fiókok (a `DbSeeder` alapján):
+
+- **Admin:**
+    - Email: *admin@carmechanic.com*
+    - Jelszó: *AdminPass123!*
+- **Mechanic (Szerelő):**
+    - Email: *mechanic@carmechanic.com*
+    - Jelszó: *MechanicPass123!*
+
+---
+
 ## 💾 Adatbázis Séma
 
 Az alkalmazás két fő entitást kezel, melyek között egy-a-többhöz (1:N) kapcsolat van.
