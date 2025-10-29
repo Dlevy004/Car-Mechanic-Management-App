@@ -55,34 +55,34 @@
     overflow: hidden;
 }
 
-.current-panel a {
-    position: relative;
-    flex: 1;
-    text-align: center;
-    color: var(--main-font-color);
-    transition: all 0.3s ease;
-}
+    .current-panel a {
+        position: relative;
+        flex: 1;
+        text-align: center;
+        color: var(--main-font-color);
+        transition: all 0.3s ease;
+    }
 
-.current-panel::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%);
-    width: 50%;
-    height: 100%;
-    background-color: var(--secondary-blue);
-    border-radius: 15px;
-    transition: all 0.4s ease-in-out;
-}
+    .current-panel::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+        width: 50%;
+        height: 100%;
+        background-color: var(--secondary-blue);
+        border-radius: 15px;
+        transition: all 0.4s ease-in-out;
+    }
 
-.current-panel.jobs-active::before {
-    left: 50%;
-}
+    .current-panel.jobs-active::before {
+        left: 50%;
+    }
 
-.current-panel a.active-panel {
-    color: var(--font-color);
-}
+    .current-panel a.active-panel {
+        color: var(--font-color);
+    }
 
 /*PROFILE PANEL*/
 .profile-panel {
@@ -101,15 +101,15 @@
     min-width: 200px;
 }
 
-.profile-panel .profile-info {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    font-size: 18px;
-    font-weight: bold;
-    color: black;
-}
+    .profile-panel .profile-info {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        font-size: 18px;
+        font-weight: bold;
+        color: black;
+    }
 
 .profile-info-header {
     display: flex;
@@ -160,31 +160,31 @@ p em {
     margin-bottom: 1rem;
 }
 
-.table-header div:last-of-type button:first-of-type {
-    margin-right: 1.5rem;
-}
+    .table-header div:last-of-type button:first-of-type {
+        margin-right: 1.5rem;
+    }
 
-.table-header div:first-of-type input {
-    width: 100%;
-    min-height: 40px;
-    padding: 0 1rem;
-    border-radius: 10px;
-    border-radius: 10px;
-    border: 1px solid grey;
-    background-color: white;
-    color: grey;
-    margin-left: 1rem;
-}
+    .table-header div:first-of-type input {
+        width: 100%;
+        min-height: 40px;
+        padding: 0 1rem;
+        border-radius: 10px;
+        border-radius: 10px;
+        border: 1px solid grey;
+        background-color: white;
+        color: grey;
+        margin-left: 1rem;
+    }
 
-.table-header div:first-of-type {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+    .table-header div:first-of-type {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
-.table-header img {
-    transform: scale(2);
-}
+    .table-header img {
+        transform: scale(2);
+    }
 
 #searchLight, #searchDark {
     transform: scale(1.5);
@@ -198,42 +198,42 @@ p em {
     overflow: hidden;
 }
 
-.data-table th,
-.data-table td {
-    padding: 1rem 1.2rem;
-    text-align: left;
-    border-bottom: 1px solid var(--primary-light);
-}
+    .data-table th,
+    .data-table td {
+        padding: 1rem 1.2rem;
+        text-align: left;
+        border-bottom: 1px solid var(--primary-light);
+    }
 
-.data-table th {
-    background-color: var(--primary-blue);
-    font-weight: bold;
-    font-size: 20px;
-    color: white;
-}
+    .data-table th {
+        background-color: var(--primary-blue);
+        font-weight: bold;
+        font-size: 20px;
+        color: white;
+    }
 
-.data-table td {
-    color: var(--main-font-color);
-    font-size: 18px;
-}
+    .data-table td {
+        color: var(--main-font-color);
+        font-size: 18px;
+    }
 
-.data-table tr:hover {
-    background-color: var(--primary-light);
-    transition: all 0.2s ease;
-}
+    .data-table tr:hover {
+        background-color: var(--primary-light);
+        transition: all 0.2s ease;
+    }
 
 .actions {
     display: flex;
     gap: 1.2rem;
 }
 
-.actions img {
-    transform: scale(1.3);
-}
+    .actions img {
+        transform: scale(1.3);
+    }
 
-.actions .anim:hover {
-    transform: translateY(-5px) scale(1.3);
-}
+    .actions .anim:hover {
+        transform: translateY(-5px) scale(1.3);
+    }
 
 .table-header img:hover {
     transform: translateY(-5px) scale(2);
@@ -255,69 +255,69 @@ p em {
     transition: all 0.2s ease;
 }
 
-.data-card:hover {
-    transform: translateY(-3px);
-}
+    .data-card:hover {
+        transform: translateY(-3px);
+    }
 
-.data-card h3 {
-    color: white;
-    background-color: var(--primary-blue);
-    border-radius: 10px;
-    padding: 1rem 2rem;
-    font-size: 20px;
-    width: 100%;
-    margin-bottom: 1rem;
-    text-align: center;
-}
+    .data-card h3 {
+        color: white;
+        background-color: var(--primary-blue);
+        border-radius: 10px;
+        padding: 1rem 2rem;
+        font-size: 20px;
+        width: 100%;
+        margin-bottom: 1rem;
+        text-align: center;
+    }
 
-.data-card .card-row {
-    display: flex;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-}
+    .data-card .card-row {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+    }
 
-/*jobs*/
+    /*jobs*/
 
-.data-card .card-row-header {
-    display: flex;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-}
+    .data-card .card-row-header {
+        display: flex;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+    }
 
-.data-card .card-row-header div {
-    color: white;
-    background-color: var(--primary-blue);
-    border-radius: 10px;
-    padding: 0.5rem 1rem;
-    font-size: 20px;
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
+        .data-card .card-row-header div {
+            color: white;
+            background-color: var(--primary-blue);
+            border-radius: 10px;
+            padding: 0.5rem 1rem;
+            font-size: 20px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
 
-.data-card .card-row-header div h3 {
-    margin: 0;
-    padding: 0.5rem;
-}
+            .data-card .card-row-header div h3 {
+                margin: 0;
+                padding: 0.5rem;
+            }
 
-.data-card .card-row p {
-    color: var(--main-font-color);
-    font-size: 18px;
-}
+    .data-card .card-row p {
+        color: var(--main-font-color);
+        font-size: 18px;
+    }
 
-.data-card .card-row p:first-of-type {
-    font-weight: bold;
-}
+        .data-card .card-row p:first-of-type {
+            font-weight: bold;
+        }
 
-.data-card .actions {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-}
+    .data-card .actions {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
 
 .hidden {
     display: none !important;
@@ -372,9 +372,9 @@ p em {
     margin-bottom: 1rem;
 }
 
-.add-panel-header h2 {
-    color: var(--main-font-color);
-}
+    .add-panel-header h2 {
+        color: var(--main-font-color);
+    }
 
 .input-fields {
     display: flex;
@@ -390,30 +390,30 @@ p em {
     gap: 5%;
 }
 
-.input-fields label, .input-fields-jobs label {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    margin-bottom: 5%;
-}
+    .input-fields label, .input-fields-jobs label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        margin-bottom: 5%;
+    }
 
-.input-fields label p, .input-fields-jobs label p {
-    color: var(--main-font-color);
-}
+        .input-fields label p, .input-fields-jobs label p {
+            color: var(--main-font-color);
+        }
 
-.input-fields label input, .input-fields label select, .input-fields label textarea,
-.input-fields-jobs label input, .input-fields-jobs label select, .input-fields-jobs label textarea {
-    margin-left: 1rem;
-    background-color: var(--primary-light);
-    border: none;
-    padding: 0 5%;
-    border-radius: 10px;
-    width: 100%;
-    min-height: 40px;
-    color: var(--main-font-color);
-    font-size: 15px;
-}
+        .input-fields label input, .input-fields label select, .input-fields label textarea,
+        .input-fields-jobs label input, .input-fields-jobs label select, .input-fields-jobs label textarea {
+            margin-left: 1rem;
+            background-color: var(--primary-light);
+            border: none;
+            padding: 0 5%;
+            border-radius: 10px;
+            width: 100%;
+            min-height: 40px;
+            color: var(--main-font-color);
+            font-size: 15px;
+        }
 
 .add-job-right label:first-of-type {
     display: flex;
@@ -445,7 +445,6 @@ p em {
 
     .table-header div:first-of-type select option {
         text-align: left;
-        
     }
 
 .input-fields-jobs label textarea {
@@ -455,11 +454,11 @@ p em {
     padding: 2.5%;
 }
 
-.input-fields label input::placeholder,
-.input-fields-jobs label input::placeholder,
-.input-fields-jobs label textarea::placeholder {
-    color: var(--placeholder-color);
-}
+    .input-fields label input::placeholder,
+    .input-fields-jobs label input::placeholder,
+    .input-fields-jobs label textarea::placeholder {
+        color: var(--placeholder-color);
+    }
 
 .add-panel-buttons {
     display: flex;
