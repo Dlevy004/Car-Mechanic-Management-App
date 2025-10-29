@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CarMechanic.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251028101131_ChangeVehicleYearTypeToDateTime")]
-    partial class ChangeVehicleYearTypeToDateTime
+    [Migration("20251029112316_ChangeVehicleYearToDateTime_Fixed")]
+    partial class ChangeVehicleYearToDateTime_Fixed
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

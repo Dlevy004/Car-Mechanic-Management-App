@@ -120,23 +120,26 @@
             job = JobToEdit;
             Title = "Edit Job";
 
-			// job stage váltásának korlátozása
-			if (job.JobStage == JobStage.ToDo)
-			{
-				availableJobStages = new List<JobStage> { JobStage.InProgress };
-			}
-			else if (job.JobStage == JobStage.InProgress)
-			{
-				availableJobStages = new List<JobStage> { JobStage.Done };
-			}
-			else
-			{
-				availableJobStages = new List<JobStage> { JobStage.Done };
-			}
+            // job stage váltásának korlátozása
+            if (job.JobStage == JobStage.ToDo)
+            {
+                availableJobStages = new List<JobStage> { JobStage.InProgress };
+            }
+            else if (job.JobStage == JobStage.InProgress)
+            {
+                availableJobStages = new List<JobStage> { JobStage.Done };
+            }
+            else
+            {
+                availableJobStages = new List<JobStage> { JobStage.Done };
+            }
         }
         else
         {
-            job = new();
+            job = new()
+                {
+                    VehicleYear = DateTime.Today
+                };
             Title = "Add New Job";
 
 			// új melónál todo státus az alapértelmezett

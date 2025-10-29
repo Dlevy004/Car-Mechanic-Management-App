@@ -17,6 +17,7 @@ namespace CarMechanic.Server
 
         public async Task<Job> AddJobAsync(Job job)
         {
+            job.VehicleYear = DateTime.SpecifyKind(job.VehicleYear, DateTimeKind.Utc);
             _context.Jobs.Add(job);
             await _context.SaveChangesAsync();
             return job;
@@ -55,6 +56,8 @@ namespace CarMechanic.Server
             {
                 throw new InvalidOperationException("Cannot regress job stage to a previous stage.");
             }
+
+            job.VehicleYear = DateTime.SpecifyKind(job.VehicleYear, DateTimeKind.Utc);
 
             _context.Entry(job).State = EntityState.Modified;
             await _context.SaveChangesAsync();
