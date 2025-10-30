@@ -503,7 +503,7 @@ p em {
 .closeBtn, .addCustomerBtn,
 .theme-switch, .addJobBtn,
 .viewSwitch, .jobDetails,
-.deleteBtn {
+.deleteBtn, .btn {
     background-color: transparent;
     border: none;
 }

@@ -5,23 +5,23 @@
 
 <header id="header"> 
     <div class="icons">
-		<img @onclick="() => OnDownloadClicked.InvokeAsync()"
-            id="downloadLight" class="icon anim lightImg" 
-            src="./images/download_for_offline_24dp_2D425C_FILL1_wght400_GRAD0_opsz24.svg" 
-            alt="Download Icon">
-		<img @onclick="() => OnDownloadClicked.InvokeAsync()"
-			 id="downloadDark" class="icon anim darkImg" 
-            src="./images/download_for_offline_24dp_E2E1E2_FILL1_wght400_GRAD0_opsz24.svg" 
-            alt="Download icon in darkmode">
-
-        <img @onclick="ToggleProfilePanel"
-            id="profileLight" class="icon anim lightImg" 
-            src="./images/account_circle_24dp_2D425C_FILL1_wght400_GRAD0_opsz24.svg" 
-            alt="Profil icon">
-        <img @onclick="ToggleProfilePanel"
-            id="profileDark" class="icon anim darkImg" 
-            src="./images/account_circle_24dp_E2E1E2_FILL1_wght400_GRAD0_opsz24.svg" 
-            alt="Profil icon in darkmode">
+        <button @onclick="() => OnDownloadClicked.InvokeAsync()" class="icon anim btn">
+            <img id="downloadLight" class="lightImg"
+                 src="./images/download_for_offline_24dp_2D425C_FILL1_wght400_GRAD0_opsz24.svg"
+                 alt="Download Icon">
+            <img id="downloadDark" class="darkImg"
+                 src="./images/download_for_offline_24dp_E2E1E2_FILL1_wght400_GRAD0_opsz24.svg"
+                 alt="Download icon in darkmode">
+        </button>
+		
+        <button @onclick="ToggleProfilePanel" class="icon anim btn">
+            <img id="profileLight" class="lightImg" 
+                src="./images/account_circle_24dp_2D425C_FILL1_wght400_GRAD0_opsz24.svg" 
+                alt="Profil icon">
+            <img id="profileDark" class="darkImg" 
+                src="./images/account_circle_24dp_E2E1E2_FILL1_wght400_GRAD0_opsz24.svg" 
+                alt="Profil icon in darkmode">
+        </button>
 
         <button class="icon anim theme-switch" @onclick="() => SetDarkMode(!darkMode)">
             @if (darkMode)
