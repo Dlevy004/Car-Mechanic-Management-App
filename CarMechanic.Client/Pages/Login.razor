@@ -21,11 +21,13 @@
                     <InputText @bind-Value=loginModel.Email typeof="email" placeholder="Email" />
                     <img class="icon" src="./images/mail_24dp_2D425C_FILL0_wght400_GRAD0_opsz24.svg" alt="Email icon">
                 </div>
-
+                <ValidationMessage For="@(() => loginModel.Email)" />
+				
                 <div class="input-field">
                     <InputText @bind-Value="loginModel.Password" type="password" placeholder="Password" />
                     <img class="icon" src="./images/lock_24dp_2D425C_FILL0_wght400_GRAD0_opsz24.svg" alt="Lock icon">
                 </div>
+				<ValidationMessage For="@(() => loginModel.Password)" />
 
                 @if (!string.IsNullOrEmpty(errorMessage))
                 {
