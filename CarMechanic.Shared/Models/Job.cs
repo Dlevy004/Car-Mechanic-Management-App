@@ -11,7 +11,7 @@ namespace CarMechanic.Shared.Models
         public int CustomerId { get; set; }
 
         [Required(ErrorMessage = "The license plate number is required.")]
-        [RegularExpression(@"^([A-Z]{3}-\d{3} | [A-Z]{4}-\d{3}])$", ErrorMessage = "The license plate format is incorrect (e.g. ABC-123 or AAAA-123).")]
+        [RegularExpression(@"^([A-Z]{3}-\d{3}|[A-Z]{4}-\d{3})$", ErrorMessage = "The license plate format is incorrect (e.g. ABC-123 or AAAA-123).")]
         public string LicensePlateNumber { get; set; }
 
         [Required(ErrorMessage = "The date of manufacture is required.")]
