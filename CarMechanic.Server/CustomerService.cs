@@ -25,6 +25,13 @@ namespace CarMechanic.Server
             var customer = await _context.Customers.FirstOrDefaultAsync(c => c.Id == id);
             if (customer != null)
             {
+                var jobsToDelete = await _context.Jobs.Where(j => j.CustomerId == id).ToListAsync();
+
+                if (jobsToDelete.Any())
+                { 
+                    _context.Jobs.RemoveRange(jobsToDelete);
+                }
+
                 _context.Customers.Remove(customer);
                 await _context.SaveChangesAsync();
             }
